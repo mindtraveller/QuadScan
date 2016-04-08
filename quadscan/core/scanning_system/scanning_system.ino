@@ -1,7 +1,7 @@
 #include "Ultrasonic.h"
 
-#define FrontTrigPin 13 
-#define FrontEchoPin 12
+#define FrontTrigPin A1 
+#define FrontEchoPin 8
 #define RightTrigPin 3 
 #define RightEchoPin 2
 #define LeftTrigPin 4 
@@ -18,6 +18,7 @@ Ultrasonic Back(BackTrigPin, BackEchoPin);
 void setup() {
 	Serial.begin(9600); 
 }
+
 void loop() {
 	unsigned int FrontSm, LeftSm, RightSm, BackSm;
 	long FrontMicrosec = Front.timing();
@@ -36,5 +37,5 @@ void loop() {
 	Serial.print(" Right : "); 
 	Serial.print(RightSm); 
 	Serial.print(" Back : "); Serial.println(BackSm);
-	delay(1000); 
+	delay(100); 
 }
