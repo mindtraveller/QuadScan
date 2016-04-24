@@ -1,46 +1,57 @@
 #define pot A2
+#define THROTTLE 3
+#define ROLL 5
+#define PITCH 6
+#define COLLECTIVE 9
+#define FLIGHT_MODE 10
+#define YAW 11
+
+//map value from [0; 255] range into TROTTLE range
+uint8_t trottleMapper(uint8_t value) {
+  if (value < 120) return 120;
+  return value;
+}
+
+uint8_t rollMapper(uint8_t value) {
+  if (value < 180) return 180;
+  return value;
+}
+
+uint8_t pitchMapper(uint8_t value) {
+  if (value < 180) return 180;
+  return value;
+}
+
+uint8_t yawMapper(uint8_t value) {
+  if (value < 90) return 90;
+  return value;
+}
+
 
 void setup() {
-  // put your setup code here, to run once:
   pinMode(pot, INPUT);
   
-  pinMode(3, OUTPUT); //throttle
-  pinMode(5, OUTPUT); //roll
-  pinMode(6, OUTPUT); //pitch
-  pinMode(9, OUTPUT);
-  pinMode(10, OUTPUT);
-  pinMode(11, OUTPUT);
+  pinMode(THROTTLE, OUTPUT); //throttle
+  pinMode(ROLL, OUTPUT); //roll
+  pinMode(PITCH, OUTPUT); //pitch
+  pinMode(COLLECTIVE, OUTPUT);
+  pinMode(FLIGHT_MODE, OUTPUT);
+  pinMode(YAW, OUTPUT);
   Serial.begin(9600);
+
+  //just to enable
+  analogWrite(COLLECTIVE, 100);
+  //it is enough to have one flight mode
+  analogWrite(FLIGHT_MODE, 100);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   int x = analogRead(pot) / 4;
-//  
-  Serial.println(x == 255 ? 254 : x);
 
-  analogWrite(3, x == 255 ? 254 : x);
-  analogWrite(5, x == 255 ? 254 : x);
-  analogWrite(6, x == 255 ? 254 : x);
-  analogWrite(9, x == 255 ? 254 : x);
-//  analogWrite(10, 198); //equls to Flight mode 1
-  ///  analogWrite(10, x);
-  analogWrite(11, x == 255 ? 254 : x);
+  Serial.println(x);
 
-
-//  //CENTER
-//  analogWrite(3, 127);
-//  analogWrite(5, 127);
-//  analogWrite(6, 127);
-//  analogWrite(9, 127);
-//  analogWrite(10, 127);
-//  analogWrite(11, 127);
-//
-//  //MAX
-//  analogWrite(3, 254);
-//  analogWrite(5, 254);
-//  analogWrite(6, 254);
-//  analogWrite(9, 254);
-//  analogWrite(10, 254);
-//  analogWrite(11, 254);
+  analogWrite(THROTTLE, trottleMapper(x));
+  analogWrite(ROLL, rollMapper(x));
+  analogWrite(PITCH, pitchMapper(x));
+  analogWrite(YAW, yawMapper(x));
 }
