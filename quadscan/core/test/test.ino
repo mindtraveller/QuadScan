@@ -10,12 +10,24 @@
 //[110; 250]
 #define YAW 9
 
+#define ROLL_MIN 190;
+#define PITCH_MIN 190;
+#define YAW_MIN 110;
+#define COLLECTIVE_MIN 100;
+#define THROTTLE_MIN 100;
 
-int throttle_value = 100;
-int roll_value = 220;
-int pitch_value = 220;
-int collective_value = 180;
-int yaw_value = 180;
+#define ROLL_NEUTRAL 220;
+#define PITCH_NEUTRAL 220;
+#define COLLECTIVE_NEUTRAL 180;
+#define YAW_NEUTRAL 180;
+
+#define THROTTLE_INITIAL 105;
+
+int throttle_value = THROTTLE_INITIAL;
+int roll_value = ROLL_NEUTRAL;
+int pitch_value = PITCH_NEUTRAL;
+int collective_value = COLLECTIVE_NEUTRAL;
+int yaw_value = YAW_NEUTRAL;
 
 void setup() {  
   pinMode(THROTTLE, OUTPUT);
@@ -31,6 +43,8 @@ void setup() {
 }
 
 void loop() {
+  while(!Serial.available());
+  
   char value = Serial.read();
   switch(value) {
     case 't':
@@ -72,6 +86,38 @@ void loop() {
     case 'C':
       collective_value += 10;  
       analogWrite(COLLECTIVE, collective_value);
+      break;
+    case 's':
+      throttle_value = THROTTLE_MIN;
+      roll_value = ROLL_MIN;
+      pitch_value = PITCH_MIN;
+      yaw_value = YAW_MIN;
+      collective_value = COLLECTIVE_MIN;
+      analogWrite(THROTTLE, throttle_value);
+      analogWrite(ROLL, roll_value);
+      analogWrite(PITCH, pitch_value);
+      analogWrite(YAW, yaw_value);
+      analogWrite(COLLECTIVE, collective_value);
+      analogWrite(FLIGHT_MODE, 190);
+
+      delay(1000);
+      
+      throttle_value = THROTTLE_INITIAL;
+      roll_value = ROLL_NEUTRAL;
+      pitch_value = PITCH_NEUTRAL;
+      yaw_value = YAW_NEUTRAL;
+      collective_value = COLLECTIVE_NEUTRAL;
+      
+      analogWrite(THROTTLE, throttle_value);
+      analogWrite(ROLL, roll_value);
+      analogWrite(PITCH, pitch_value);
+      analogWrite(YAW, yaw_value);
+      analogWrite(COLLECTIVE, collective_value);
+      analogWrite(FLIGHT_MODE, 200);
+      break;
+    case 'q':
+      throttle_value = THROTTLE_MIN;
+      analogWrite(THROTTLE, throttle_value);
       break;
   }
   
