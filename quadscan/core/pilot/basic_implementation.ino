@@ -1,16 +1,4 @@
-#include "Ultrasonic.h"
-
-#define FrontTrigPin A1 
-#define FrontEchoPin 8
-#define RightTrigPin 3 
-#define RightEchoPin 2
-#define LeftTrigPin 4 
-#define LeftEchoPin 5
-#define BackTrigPin 7 
-#define BackEchoPin 6
-
-const int TOO_FAR = 10000;
-const int ONE_STEP = 100;
+#include "constants.h"
 
 Ultrasonic Front(FrontTrigPin, FrontEchoPin); 
 

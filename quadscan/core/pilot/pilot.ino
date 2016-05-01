@@ -1,26 +1,7 @@
-#include "Ultrasonic.h"
+#include "constants.h"
 
-#define FrontTrigPin A1 
-#define FrontEchoPin 8
-#define RightTrigPin 3 
-#define RightEchoPin 2
-#define LeftTrigPin 4 
-#define LeftEchoPin 5
-#define BackTrigPin 7 
-#define BackEchoPin 6
 
-const int TOO_FAR = 10000;
-const int ONE_STEP = 1;
 
-const char NOT_SET = 0;
-const char EMPTY = 1;
-const char OBSTACLE = 2;
-
-enum ROTATION {
-    FRONT, RIGHT, BACK, LEFT
-};
-
-const int BASIC_SIZE = 30;
 
 int distances[10] = {0};
 
@@ -30,6 +11,20 @@ Ultrasonic Front(FrontTrigPin, FrontEchoPin);
 Ultrasonic Right(RightTrigPin, RightEchoPin);
 Ultrasonic Left(LeftTrigPin, LeftEchoPin);
 Ultrasonic Back(BackTrigPin, BackEchoPin);
+
+
+
+unsigned int distance_front = 0;
+unsigned int distance_back = 0;
+unsigned int distance_left = 0;
+unsigned int distance_right = 0;
+
+unsigned int current_x = BASIC_SIZE / 2;
+unsigned int current_y = BASIC_SIZE / 2;
+char current_rotation = FRONT;
+
+
+
 
 void go_forward(int distance) {
     switch (current_rotation) {
@@ -99,15 +94,6 @@ void setup() {
     }
 }
 
-unsigned int distance_front = 0;
-unsigned int distance_back = 0;
-unsigned int distance_left = 0;
-unsigned int distance_right = 0;
-
-unsigned int current_x = BASIC_SIZE / 2;
-unsigned int current_y = BASIC_SIZE / 2;
-char current_rotation = FRONT;
-
 void loop() {
     distance_front = distance_from(Front);
     distance_back = distance_from(Back);
@@ -119,7 +105,7 @@ void loop() {
     check_and_set(distance_left, 0, -1);
     check_and_set(distance_right, -1, 0);
 
-    if (distance == TOO_FAR) {
+    if (distance_front == TOO_FAR) {
         go_forward(ONE_STEP);
     } else {
         go_turn_right();
