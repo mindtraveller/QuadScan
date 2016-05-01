@@ -1,13 +1,13 @@
 #include "Ultrasonic.h"
 
-#define FrontTrigPin A1 
-#define FrontEchoPin 8
-#define RightTrigPin 3 
-#define RightEchoPin 2
-#define LeftTrigPin 4 
-#define LeftEchoPin 5
-#define BackTrigPin 7 
-#define BackEchoPin 6
+#define FrontTrigPin A5 
+#define FrontEchoPin A4
+#define RightTrigPin A3
+#define RightEchoPin A2
+#define LeftTrigPin A1
+#define LeftEchoPin A0
+#define BackTrigPin 13
+#define BackEchoPin 12
 
 
 Ultrasonic Front(FrontTrigPin, FrontEchoPin); 
