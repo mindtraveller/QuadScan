@@ -5,7 +5,7 @@
 
 int distances[10] = {0};
 
-char **data_map = NULL;
+byte **data_map = NULL;
 
 Ultrasonic Front(FrontTrigPin, FrontEchoPin);
 Ultrasonic Right(RightTrigPin, RightEchoPin);
@@ -14,20 +14,20 @@ Ultrasonic Back(BackTrigPin, BackEchoPin);
 
 
 
-unsigned int distance_front = 0;
-unsigned int distance_back = 0;
-unsigned int distance_left = 0;
-unsigned int distance_right = 0;
+byte distance_front = 0;
+byte distance_back = 0;
+byte distance_left = 0;
+byte distance_right = 0;
 
 unsigned int current_x = BASIC_SIZE / 2;
 unsigned int current_y = BASIC_SIZE / 2;
-char current_rotation = FRONT;
+byte current_direction = FRONT;
 
 
 
 
 void go_forward(int distance) {
-    switch (current_rotation) {
+    switch (current_direction) {
     case FRONT:
         current_x += distance;
         if (current_x > BASIC_SIZE) { current_x -= distance; }
@@ -48,35 +48,35 @@ void go_forward(int distance) {
 }
 
 void go_turn_right() {
-    current_rotation += 1;
-    if (current_rotation > LEFT) {
-        current_rotation = FRONT;
+    current_direction += 1;
+    if (current_direction > LEFT) {
+        current_direction = FRONT;
     }
 }
 
 void go_turn_left() {
-    current_rotation -= 1;
-    if (current_rotation < 0) {
-        current_rotation = LEFT;
+    current_direction -= 1;
+    if (current_direction < 0) {
+        current_direction = LEFT;
     }
 }
 
-unsigned int distance_from(Ultrasonic &sonic)
+byte distance_from(Ultrasonic &sonic)
 {
     long microsec = sonic.timing();
     unsigned int result = Front.convert(microsec, Ultrasonic::CM);
-    if (result > 150) {
+    if (result > THRESHOLD) {
         return TOO_FAR;
     }
     return result;
 }
 
-void set_to_map(char value, unsigned int x, unsigned int y)
+void set_to_map(byte value, unsigned int x, unsigned int y)
 {
     data_map[x][y] = value;
 }
 
-void check_and_set(unsigned int distance, unsigned int dx, unsigned int dy)
+void check_and_set(byte distance, unsigned int dx, unsigned int dy)
 {
     if (distance == TOO_FAR) {
         set_to_map(EMPTY, current_x + dx, current_y + dy);
@@ -88,10 +88,12 @@ void check_and_set(unsigned int distance, unsigned int dx, unsigned int dy)
 void setup() {
     Serial.begin(9600);
 
-    data_map = (char **) calloc(BASIC_SIZE, sizeof(char *));
+    data_map = (byte **) calloc(BASIC_SIZE, sizeof(byte *));
     for (int i = 0; i < BASIC_SIZE; ++i) {
-        data_map[i] = (char *) calloc(BASIC_SIZE, sizeof(char));
+        data_map[i] = (byte *) calloc(BASIC_SIZE, sizeof(byte));
     }
+
+    //TODO: copter input pins initialization
 }
 
 void loop() {
@@ -99,6 +101,8 @@ void loop() {
     distance_back = distance_from(Back);
     distance_left = distance_from(Left);
     distance_right = distance_from(Right);
+
+    //TODO : send data
 
     check_and_set(distance_front, 1, 0);
     check_and_set(distance_back, -1, 0);

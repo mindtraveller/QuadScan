@@ -3,33 +3,34 @@
 
 #include "Ultrasonic.h"
 
-#define FrontTrigPin A1 
-#define FrontEchoPin 8
-#define RightTrigPin 3 
-#define RightEchoPin 2
-#define LeftTrigPin 4 
-#define LeftEchoPin 5
-#define BackTrigPin 7 
-#define BackEchoPin 6
+#define FrontTrigPin A5 
+#define FrontEchoPin A4
+#define RightTrigPin A3
+#define RightEchoPin A2
+#define LeftTrigPin A1
+#define LeftEchoPin A0
+#define BackTrigPin 13
+#define BackEchoPin 12
 
 
-const int TOO_FAR = 10000;
-const int ONE_STEP = 1;
+const byte THRESHOLD = 150;
+const byte TOO_FAR = 255;
+const byte ONE_STEP = 1;
 
 
 // map cells
-const char NOT_SET = 0;
-const char EMPTY = 1;
-const char OBSTACLE = 2;
+const byte NOT_SET = 0;
+const byte EMPTY = 1;
+const byte OBSTACLE = 2;
 
 
-enum ROTATION {
+enum DIRECTION {
     FRONT, RIGHT, BACK, LEFT
 };
 
 
 // map size
-const int BASIC_SIZE = 30;
+const byte BASIC_SIZE = 30;
 
 
 #endif // CONSTANTS_H
