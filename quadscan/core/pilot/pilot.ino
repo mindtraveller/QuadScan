@@ -1,18 +1,17 @@
+#include <SoftwareSerial.h>
 #include "constants.h"
-
-
-
 
 int distances[10] = {0};
 
 byte **data_map = NULL;
 
-Ultrasonic Front(FrontTrigPin, FrontEchoPin);
-Ultrasonic Right(RightTrigPin, RightEchoPin);
-Ultrasonic Left(LeftTrigPin, LeftEchoPin);
-Ultrasonic Back(BackTrigPin, BackEchoPin);
-
-
+/**
+ * Sonars
+ */
+Ultrasonic Front(FRONT_TRIG, FRONT_ECHO);
+Ultrasonic Right(RIGHT_TRIG, RIGHT_ECHO);
+Ultrasonic Left(LEFT_TRIG, LEFT_ECHO);
+Ultrasonic Back(BACK_TRIG, BACK_ECHO);
 
 byte distance_front = 0;
 byte distance_back = 0;
@@ -21,9 +20,11 @@ byte distance_right = 0;
 
 unsigned int current_x = BASIC_SIZE / 2;
 unsigned int current_y = BASIC_SIZE / 2;
+
+/**
+ * current direction of the copter
+ */
 byte current_direction = FRONT;
-
-
 
 
 void go_forward(int distance) {
@@ -85,8 +86,14 @@ void check_and_set(byte distance, unsigned int dx, unsigned int dy)
     }
 }
 
+void send_data(byte front, byte left, byte right, byte back, byte dx, byte dy, byte direction) 
+{
+    byte package[] = {front, left, right, back, dx, dy, direction};
+    Serial.write(package, PACKAGE_SIZE); //BT is connected to the Serial.
+}
+
 void setup() {
-    Serial.begin(9600);
+    Serial.begin(9600); 
 
     data_map = (byte **) calloc(BASIC_SIZE, sizeof(byte *));
     for (int i = 0; i < BASIC_SIZE; ++i) {
@@ -102,7 +109,7 @@ void loop() {
     distance_left = distance_from(Left);
     distance_right = distance_from(Right);
 
-    //TODO : send data
+    send_data(distance_front, distance_left, distance_right, distance_back, 1, 1, current_direction);
 
     check_and_set(distance_front, 1, 0);
     check_and_set(distance_back, -1, 0);
