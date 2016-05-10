@@ -68,6 +68,11 @@ const byte BASIC_SIZE = 30;
 #define COLLECTIVE_NEUTRAL 180;
 #define YAW_NEUTRAL 180;
 
+#define ROLL_GREATER 225;
+#define ROLL_LESS 215;
+#define PITCH_GREATER 225;
+#define PITCH_LESS 215;
+
 #define THROTTLE_INITIAL 105;
 
 #define STEP 1

@@ -25,7 +25,7 @@ Ultrasonic Back(BACK_TRIG, BACK_ECHO);
 byte distance_from(Ultrasonic &sonic)
 {
     long microsec = sonic.timing();
-    unsigned int result = Front.convert(microsec, Ultrasonic::CM);
+    unsigned int result = sonic.convert(microsec, Ultrasonic::CM);
     if (result > THRESHOLD) {
         return TOO_FAR;
     }
@@ -54,17 +54,17 @@ void loop() {
     right_distance = distance_from(Right);
 
     if (front_distance < THRESHOLD) {
-      pitch_value += STEP;
+      pitch_value = PITCH_GREATER;
     } else if (back_distance < THRESHOLD) {
-      pitch_value -= STEP;
+      pitch_value = PITCH_LESS;
     } else {
       pitch_value = PITCH_NEUTRAL;
     }
     
     if (left_distance < THRESHOLD) {
-      roll_value -= STEP;
+      roll_value = ROLL_LESS;
     } else if (right_distance < THRESHOLD) {
-      roll_value += STEP;
+      roll_value = ROLL_GREATER;
     } else {
       roll_value = ROLL_NEUTRAL;
     }
@@ -131,7 +131,7 @@ void loop() {
         analogWrite(COLLECTIVE, collective_value);
         analogWrite(FLIGHT_MODE, 190);
   
-        delay(1000);
+        delay(100);
         
         throttle_value = THROTTLE_INITIAL;
         roll_value = ROLL_NEUTRAL;
@@ -151,15 +151,22 @@ void loop() {
         analogWrite(THROTTLE, throttle_value);
         break;
     }
+    Serial.print("trottle: ");
+    Serial.println(throttle_value);
+    Serial.print("roll: ");
+    Serial.println(roll_value);
+    Serial.print("pitch: ");
+    Serial.println(pitch_value);
+    Serial.println("\n");
   }
 
-  Serial.print("trottle: ");
-  Serial.println(throttle_value);
-  Serial.print("roll: ");
-  Serial.println(roll_value);
-  Serial.print("pitch: ");
-  Serial.println(pitch_value);
-  Serial.println("\n");
+//  Serial.print("trottle: ");
+//  Serial.println(throttle_value);
+//  Serial.print("roll: ");
+//  Serial.println(roll_value);
+//  Serial.print("pitch: ");
+//  Serial.println(pitch_value);
+//  Serial.println("\n");
 //  Serial.println(yaw_value);
 //  Serial.println(collective_value);
 }
