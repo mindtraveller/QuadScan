@@ -17,7 +17,13 @@ MIN = 0
 throttle = pitch = row = yaw = MIN
  
 while true do
-  puts sp.gets.chomp
+  begin
+    while (i = sp.read_nonblock(1))
+      print i
+    end
+  rescue Exception => e
+    # puts ""
+  end
 
   begin
     # c = STDIN.read_nonblock(1)
@@ -25,6 +31,8 @@ while true do
     STDIN.raw!
 
     c = STDIN.getc.chr
+    # c = STDIN.getch
+
   rescue Errno::EAGAIN
     next
   ensure
@@ -34,25 +42,25 @@ while true do
 
   case c
   when "w"
-    sp.write "T\n"
+    sp.write "T"
     throttle += 1
   when "x"
-    sp.write "t\n"
+    sp.write "t"
     throttle -= 1
   when "s"
-    sp.write "s\n"
+    sp.write "s"
   when "a"
-    sp.write "Y\n"
+    sp.write "Y"
   when "d"
-    sp.write "y\n"
+    sp.write "y"
   when "q"
-    sp.write "R\n"
+    sp.write "R"
   when "e"
-    sp.write "r\n"
+    sp.write "r"
   when "z"
-    sp.write "R\n"
+    sp.write "P"
   when "c"
-    sp.write "r\n"
+    sp.write "p"
   end
 
   # puts "pitch: #{pitch} row: #{row} yaw #{yaw}"
