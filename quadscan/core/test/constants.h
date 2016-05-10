@@ -21,7 +21,7 @@
 #define PACKAGE_SIZE 7
 
 
-const byte THRESHOLD = 150;
+const byte THRESHOLD = 50;
 const byte TOO_FAR = 255;
 const byte ONE_STEP = 1;
 

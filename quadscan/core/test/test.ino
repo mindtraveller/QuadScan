@@ -24,7 +24,7 @@ Ultrasonic Back(BACK_TRIG, BACK_ECHO);
 
 byte distance_from(Ultrasonic &sonic)
 {
-    long microsec = sonic.multiple_timing();
+    long microsec = sonic.timing();
     unsigned int result = sonic.convert(microsec, Ultrasonic::CM);
     if (result > THRESHOLD) {
         return TOO_FAR;
@@ -49,7 +49,7 @@ void loop() {
 
   if (isInitialized) {
     front_distance = distance_from(Front);
-    Serial.print("front: ");
+    Serial.print("\nfront: ");
     Serial.println(front_distance);
     
     back_distance = distance_from(Back);
@@ -73,9 +73,9 @@ void loop() {
     }
     
     if (left_distance < THRESHOLD) {
-      roll_value = ROLL_LESS;
-    } else if (right_distance < THRESHOLD) {
       roll_value = ROLL_GREATER;
+    } else if (right_distance < THRESHOLD) {
+      roll_value = ROLL_LESS;
     } else {
       roll_value = ROLL_NEUTRAL;
     }
@@ -162,7 +162,7 @@ void loop() {
         analogWrite(THROTTLE, throttle_value);
         break;
     }
-    Serial.print("trottle: ");
+    Serial.print("\ntrottle: ");
     Serial.println(throttle_value);
     Serial.print("roll: ");
     Serial.println(roll_value);

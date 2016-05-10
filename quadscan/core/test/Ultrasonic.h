@@ -22,7 +22,7 @@
 
 #include <stddef.h>
 
-#define TIMES_TO_CHECK 5
+#define TIMES_TO_CHECK 1
 
 #if defined(ARDUINO) && ARDUINO >= 100
   #include <Arduino.h>
