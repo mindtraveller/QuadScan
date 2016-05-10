@@ -1,3 +1,5 @@
+#include <SoftwareSerial.h>
+
 #include "Ultrasonic.h"
 
 #define FrontTrigPin A5 
