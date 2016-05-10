@@ -26,18 +26,19 @@ while true do
   end
 
   begin
-    # c = STDIN.read_nonblock(1)
-    STDIN.echo = false
-    STDIN.raw!
+    c = STDIN.read_nonblock(1)
+    # STDIN.echo = false
+    # STDIN.raw!
 
-    c = STDIN.getc.chr
+    # c = STDIN.getc.chr
     # c = STDIN.getch
 
   rescue Errno::EAGAIN
+    sleep(0.003)
     next
   ensure
-    STDIN.echo = true
-    STDIN.cooked!
+    # STDIN.echo = true
+    # STDIN.cooked!
   end
 
   case c
