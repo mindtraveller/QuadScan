@@ -32,6 +32,7 @@ while true do
 
     # c = STDIN.getc.chr
     # c = STDIN.getch
+    exit(0) if c == "0"
 
   rescue Errno::EAGAIN
     sleep(0.003)
