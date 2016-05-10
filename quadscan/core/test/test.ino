@@ -24,7 +24,7 @@ Ultrasonic Back(BACK_TRIG, BACK_ECHO);
 
 byte distance_from(Ultrasonic &sonic)
 {
-    long microsec = sonic.timing();
+    long microsec = sonic.multiple_timing();
     unsigned int result = sonic.convert(microsec, Ultrasonic::CM);
     if (result > THRESHOLD) {
         return TOO_FAR;

@@ -22,6 +22,8 @@
 
 #include <stddef.h>
 
+#define TIMES_TO_CHECK 5
+
 #if defined(ARDUINO) && ARDUINO >= 100
   #include <Arduino.h>
 #else
@@ -45,6 +47,7 @@ class Ultrasonic
     public:
     Ultrasonic(int tp, int ep);
     long timing();
+    long multiple_timing();
     float convert(long microsec, int metric);
     void setDivisor(float value, int metric);
     static const int IN = 0;

@@ -58,6 +58,15 @@ long Ultrasonic::timing()
     return pulseIn(_echoPin, HIGH);
     }
 
+long Ultrasonic::multiple_timing()
+{
+    long sum = 0, i = 0;
+    for (i = 0; i < TIMES_TO_CHECK; ++i) {
+        sum += timing();
+    }
+    return sum / TIMES_TO_CHECK;
+}
+
 float Ultrasonic::convert(long microsec, int metric)
     {
     // microsec / 29 / 2;
