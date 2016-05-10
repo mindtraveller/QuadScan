@@ -49,9 +49,20 @@ void loop() {
 
   if (isInitialized) {
     front_distance = distance_from(Front);
+    Serial.print("front: ");
+    Serial.println(front_distance);
+    
     back_distance = distance_from(Back);
+    Serial.print("back: ");
+    Serial.println(back_distance);
+    
     left_distance = distance_from(Left);
+    Serial.print("left: ");
+    Serial.println(left_distance);
+    
     right_distance = distance_from(Right);
+    Serial.print("right: ");
+    Serial.println(right_distance);
 
     if (front_distance < THRESHOLD) {
       pitch_value = PITCH_GREATER;
