@@ -63,6 +63,16 @@ while true do
     sp.write "P"
   when "c"
     sp.write "p"
+  when "1"
+    sp.write "T"
+    sp.write "Y"
+    sp.write "R"
+    sp.write "P"
+  when "2"
+    sp.write "t"
+    sp.write "y"
+    sp.write "r"
+    sp.write "p"
   end
 
   # puts "pitch: #{pitch} row: #{row} yaw #{yaw}"
