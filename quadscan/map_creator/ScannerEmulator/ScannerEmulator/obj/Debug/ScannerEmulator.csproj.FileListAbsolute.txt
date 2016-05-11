@@ -1,0 +1,6 @@
+G:\Projects\ScannerEmulator\ScannerEmulator\bin\Debug\ScannerEmulator.exe.config
+G:\Projects\ScannerEmulator\ScannerEmulator\bin\Debug\ScannerEmulator.exe
+G:\Projects\ScannerEmulator\ScannerEmulator\bin\Debug\ScannerEmulator.pdb
+G:\Projects\ScannerEmulator\ScannerEmulator\obj\Debug\ScannerEmulator.csprojResolveAssemblyReference.cache
+G:\Projects\ScannerEmulator\ScannerEmulator\obj\Debug\ScannerEmulator.exe
+G:\Projects\ScannerEmulator\ScannerEmulator\obj\Debug\ScannerEmulator.pdb
